@@ -36,6 +36,14 @@ async function build() {
   const index = gallery.replace(/src="(\d+)\.jpg"/g, 'src="images/$1.jpg"');
   fs.writeFileSync(path.join(PUBLIC, "index.html"), index);
 
+  for (const asset of ["bg.png", "logo.png"]) {
+    const src = path.join(ROOT, asset);
+    if (fs.existsSync(src)) {
+      fs.copyFileSync(src, path.join(PUBLIC, asset));
+      console.log(`  ✓ ${asset}`);
+    }
+  }
+
   console.log("\nBuild complete → public/");
 }
 
